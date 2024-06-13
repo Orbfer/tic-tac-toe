@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+}
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.game-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+.gameboard {
+  width: 25vw;
+  height: 50vh;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+.cell {
+  border: 2px solid black;
+}
