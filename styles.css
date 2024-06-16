@@ -16,8 +16,28 @@ body {
   width: 25vw;
   height: 50vh;
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 .cell {
   border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+}
+.counters {
+  display: flex;
+  gap: 32px;
+}
+.pop-up {
+  width: 25vw;
+  height: 50vh;
+  background-color: rgba(0, 0, 0, 0.697);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+  color: white;
 }
