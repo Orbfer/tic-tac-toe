@@ -1,8 +1,7 @@
 const gameBoard = document.querySelector(".gameboard");
 const cells = document.querySelectorAll(".cell");
 const statusDisplay = document.querySelector(".status");
-const restartBtn = document.querySelector(".restart");
-const resetScoreBtn = document.querySelector(".reset-score");
+const resetScoreBtn = document.querySelector(".reset");
 const xCounterDisplay = document.querySelector(".counter-x");
 const oCounterDisplay = document.querySelector(".counter-o");
 
@@ -29,7 +28,6 @@ startGame();
 
 function startGame() {
   cells.forEach((cell) => cell.addEventListener("click", cellClicked));
-  restartBtn.addEventListener("click", restartGame);
   resetScoreBtn.addEventListener("click", resetScore);
   statusDisplay.textContent = `${currentPlayer}'s turn`;
   gameRunning = true;
@@ -62,10 +60,10 @@ function checkResult() {
       popUpWin(boardScore[a]);
       if (currentPlayer === "X") {
         counterX++;
-        xCounterDisplay.textContent = `X - ${counterX}`;
+        xCounterDisplay.textContent = `${counterX}`;
       } else {
         counterO++;
-        oCounterDisplay.textContent = `O - ${counterO}`;
+        oCounterDisplay.textContent = `${counterO}`;
       }
       gameRunning = false;
       return;
@@ -94,8 +92,8 @@ function restartGame() {
 function resetScore() {
   counterX = 0;
   counterO = 0;
-  xCounterDisplay.textContent = `X - ${counterX}`;
-  oCounterDisplay.textContent = `O - ${counterO}`;
+  xCounterDisplay.textContent = `${counterX}`;
+  oCounterDisplay.textContent = `${counterO}`;
 }
 
 function popUpWin(player) {
