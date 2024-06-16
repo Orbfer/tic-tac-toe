@@ -1,6 +1,5 @@
 const gameBoard = document.querySelector(".gameboard");
 const cells = document.querySelectorAll(".cell");
-const statusDisplay = document.querySelector(".status");
 const resetScoreBtn = document.querySelector(".reset");
 const xCounterDisplay = document.querySelector(".counter-x");
 const oCounterDisplay = document.querySelector(".counter-o");
@@ -28,24 +27,35 @@ startGame();
 
 function startGame() {
   cells.forEach((cell) => cell.addEventListener("click", cellClicked));
+  cells.forEach((cell) => cell.addEventListener("mouseover", showOption));
   resetScoreBtn.addEventListener("click", resetScore);
-  statusDisplay.textContent = `${currentPlayer}'s turn`;
   gameRunning = true;
 }
-
 function cellClicked() {
   const cellPosition = this.getAttribute("cellPosition");
   if (boardScore[cellPosition] !== "" || !gameRunning) {
     return;
   }
+  this.removeEventListener("mouseleave", cellClear);
   this.textContent = currentPlayer;
+  this.style.color = "#a91d3a";
   boardScore[cellPosition] = currentPlayer;
   checkResult();
 }
-
+function showOption() {
+  const cellPosition = this.getAttribute("cellPosition");
+  if (boardScore[cellPosition] !== "" || !gameRunning) {
+    return;
+  }
+  this.textContent = currentPlayer;
+  this.style.color = "#a91d399e";
+  this.addEventListener("mouseleave", cellClear);
+}
+function cellClear() {
+  this.textContent = "";
+}
 function changePlayer() {
   currentPlayer = currentPlayer === "X" ? "O" : "X";
-  statusDisplay.textContent = `${currentPlayer}'s turn`;
 }
 
 function checkResult() {
@@ -56,7 +66,6 @@ function checkResult() {
       boardScore[a] === boardScore[b] &&
       boardScore[a] === boardScore[c]
     ) {
-      statusDisplay.textContent = "";
       popUpWin(boardScore[a]);
       if (currentPlayer === "X") {
         counterX++;
@@ -81,7 +90,6 @@ function restartGame() {
   boardScore = ["", "", "", "", "", "", "", "", ""];
   currentPlayer = "X";
   gameRunning = true;
-  statusDisplay.textContent = `${currentPlayer}'s turn`;
   cells.forEach((cell) => (cell.textContent = ""));
   if (scorePopUp) {
     scorePopUp.remove();
@@ -102,6 +110,8 @@ function popUpWin(player) {
   }
   scorePopUp = document.createElement("div");
   scorePopUp.classList.add("pop-up");
+  scorePopUp.classList.add("animate__animated");
+  scorePopUp.classList.add("animate__fadeIn");
   scorePopUp.addEventListener("click", restartGame);
   scorePopUp.innerText = `${player} Has Won!`;
   gameBoard.appendChild(scorePopUp);
@@ -112,6 +122,8 @@ function popUpDraw() {
   }
   scorePopUp = document.createElement("div");
   scorePopUp.classList.add("pop-up");
+  scorePopUp.classList.add("animate__animated");
+  scorePopUp.classList.add("animate__fadeIn");
   scorePopUp.addEventListener("click", restartGame);
   scorePopUp.innerText = "It's a Draw!";
   gameBoard.appendChild(scorePopUp);
